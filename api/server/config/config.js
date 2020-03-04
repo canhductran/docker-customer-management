@@ -2,7 +2,7 @@ const envVars = {
     SERVER_HOST: '0.0.0.0',
     SERVER_PORT: 3001,
     MONGO_HOST: '0.0.0.0',
-    MONGO_PORT: 27010
+    MONGO_PORT: 27017
 }
 
 const config = {
