@@ -17,6 +17,15 @@ Ports running:
 
 To access the application, go to http://localhost:3000
 
+## Technology Stack
+* React
+
+* NodeJS
+
+* Express
+
+* MongoDB
+
 ## Project Structure
 ```
 |__ api
