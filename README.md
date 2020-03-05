@@ -1,9 +1,12 @@
 ## Run Project
 
+To run the project, do this:
+
 ```bash
-cd my-app
+cd docker-customer-management
 docker-compose up
 ```
+Please free up these ports before running the application.
 
 * Server port: 3001
 
@@ -11,7 +14,6 @@ docker-compose up
 
 * Database port: 27017
 
-Please free up these ports before running the application.
 
 To access the application, go to http://localhost:3000
 
