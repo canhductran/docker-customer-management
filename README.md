@@ -8,9 +8,9 @@ docker-compose up
 ```
 Ports running:
 
-* Server port: 3001
-
 * Client port: 3000
+
+* Server port: 3001
 
 * Database port: 27017
 
