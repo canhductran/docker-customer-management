@@ -1,21 +1,38 @@
+const {validate} = require('../models/customer.model'); 
+
 const customersService = require('../services/customers.service');
 
+/**
+ * Controller method for getting a collection of Customers.
+ * Send the matched Customers using response.
+ * @param {*} req Request
+ * @param {*} res Response
+ */
 const getCustomers = async function(req, res) {
-    const telephoneNumber = req.query.customerTelephoneNumber;
+    const phone = req.query.phone;
 
-    let customers = await customersService.getCustomers(telephoneNumber);
+    const customers = await customersService.getCustomers(phone);
     
     res.send(customers);
 };
 
+/**
+ * Controller method for creating a Customer record.
+ * Validate the customer details before calling the service method.
+ * @param {*} req Request
+ * @param {*} res Response
+ */
 const postCustomer = async function(req, res) {
-    const customerName = req.body.customerName;
-    const customerTelephoneNumber = req.body.customerTelephoneNumber;
+    const { error } = validate(req.body); 
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
 
-    let customer = await customersService.postCustomer(customerName, customerTelephoneNumber);
+    const name = req.body.name;
+    const phone = req.body.phone;
+
+    const customer = await customersService.postCustomer(name, phone);
     
-    console.log('controller postCustomer');
-    console.log(customer);
     res.send(customer);
 };
 

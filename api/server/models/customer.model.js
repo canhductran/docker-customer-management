@@ -1,10 +1,38 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
+const Joi = require('joi');
 
-var CustomerSchema = new Schema({
-	name: {type: String, required: true},
-	telephone: {type: String, required: true, unique: true}
+const CustomerSchema = new Schema({
+	name: {
+		type: String,
+		required: true,
+		minlength: 5,
+		maxlength: 50
+	},
+	phone: {
+		type: String,
+		required: true,
+		unique: true,
+		minlength: 11,
+		maxlength: 11,
+	}
 });
 
-module.exports = mongoose.model("Customer", CustomerSchema);
+/**
+ * Validate details of a Customer.
+ * @param {*} customer 
+ */
+const validateCustomer = (customer) => {
+	const schema = {
+		name: Joi.string().min(5).max(50).required(),
+		phone: Joi.string().min(11).max(11).required()
+	}
+
+	return Joi.validate(customer, schema);
+}
+
+module.exports = {
+	Customer: mongoose.model("Customer", CustomerSchema),
+	validate: validateCustomer
+}

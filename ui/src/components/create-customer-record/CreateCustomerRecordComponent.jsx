@@ -11,114 +11,138 @@ import { Message } from 'semantic-ui-react'
 import './create-customer-record.scss';
 
 class CreateCustomerRecordComponent extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        customerName: '',
-        customerTelephoneNumber: '',
-        errors: []
-    }
-  }
-
-  validate(customerName, customerTelephoneNumber) {
-    let errors = [];
-
-    if (!customerTelephoneNumber || customerTelephoneNumber.toString().length !== 11) {
-        console.log(customerTelephoneNumber);
-        errors.push('Telephone number has to have 11 digits')
-    }
-
-    if (!customerName || !customerName.length) {
-        errors.push('Customer Name cannot be empty');
-    }
-
-    return errors;
-  }
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-    const {customerName, customerTelephoneNumber} = this.state;
-
-    const validationErrors = this.validate(customerName, customerTelephoneNumber);
-
-    this.setState({
-      errors: validationErrors
-    });
-
-    if (validationErrors.length) {
-      return;
-    }
-
-    axios.request({
-      method: 'POST',
-      url: 'http://localhost:3001/api/customers',
-      data: {
-        customerName: customerName,
-        customerTelephoneNumber: customerTelephoneNumber
-      },
-
-    }).then((res)=>{
-      let result = res.data;
-
-      if (!result) {
-        this.setState({
-          errors: ['A customer with the same telephone number already exists']
-        });
-      }
-    }).catch((err)=>{
-      console.log("api call unsucessfull", err);
-    })
-  }
-
-  handleChange = event => {
-      const {value, name} = event.target;
-
-      this.setState({
-          [name]: value
-      });
-  }
-
-  render() {
-    const {customerName, customerTelephoneNumber} = this.state;
-
-    return (
-      <div className='create-customer-record-container'>
-        <form className='create-customer-record' onSubmit={this.handleSubmit}>
-            <FormInput
-                type='text'
-                name='customerName'
-                value={customerName}
-                label='Customer Name'
-                onChange={this.handleChange}
-                required></FormInput>
-
-            <FormInput
-                type='number'
-                name='customerTelephoneNumber'
-                value={customerTelephoneNumber}
-                label='Customer Telephone Number'
-                onChange={this.handleChange}
-                required></FormInput>
-
-            <CustomButton type='submit'>Create</CustomButton>
-        </form>
-
-        {
-          this.state.errors && this.state.errors.length ?
-          <Message
-            error
-            header='There was some errors with your submission'
-            list={this.state.errors}
-            className='validation-errors'
-          />
-          :
-          null
+        this.state = {
+            name: '',
+            phone: '',
+            errors: [],
+            successMessage: ''
         }
-      </div>
-    );
-  }
+    }
+
+    validate(name, phone) {
+        let errors = [];
+
+        if (!phone || phone.toString().length !== 11) {
+            errors.push('Telephone number has to have 11 digits')
+        }
+
+        if (!name || !name.length) {
+            errors.push('Customer Name cannot be empty');
+        }
+
+        return errors;
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+
+        const {name, phone} = this.state;
+        const validationErrors = this.validate(name, phone);
+
+        this.setState({
+            errors: validationErrors
+        });
+
+        if (validationErrors.length) {
+            return;
+        }
+
+        axios.request({
+            method: 'POST',
+            url: 'http://localhost:3001/api/customers',
+            data: {
+                name: name,
+                phone: phone
+            }
+        }).then((res) => {
+            let result = res.data;
+
+            if (!result) {
+                this.setState({
+                    errors: ['A customer with the same telephone number already exists'],
+                    successMessage: ''
+                });
+            } else {
+                this.setState({
+                    successMessage: `Customer ${name} has been created`,
+                    errors: []
+                })
+            }
+        }).catch((err) => {
+            this.setState({
+                successMessage: '',
+                errors: ['An unexpected error has happened. Please try again.']
+            })
+            console.log("api call unsucessfull", err);
+        });
+    }
+
+    handleChange = event => {
+        const {value, name} = event.target;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    render() {
+        const {name, phone} = this.state;
+
+        return (
+            <div className='create-customer-record-container'>
+                <form className='create-customer-record' onSubmit={this.handleSubmit}>
+                    <FormInput
+                        type='text'
+                        name='name'
+                        value={name}
+                        label='Customer Name'
+                        onChange={this.handleChange}
+                        required>
+                    </FormInput>
+
+                    <FormInput
+                        type='number'
+                        name='phone'
+                        value={phone}
+                        label='Customer Telephone Number'
+                        onChange={this.handleChange}
+                        required>
+                    </FormInput>
+
+                    <CustomButton type='submit'>Create</CustomButton>
+                </form>
+
+                {
+                    this.state.errors && this.state.errors.length ?
+                    <Message
+                        error
+                        header='Failure'
+                        list={this.state.errors}
+                        className='validation-errors'
+                    />
+                    :
+                    null
+                }
+
+                {
+                    this.state.successMessage ?
+                    <Message
+                        positive
+                        className='success-message'>
+                        <Message.Header>Success</Message.Header>
+                        <p>
+                            {this.state.successMessage}
+                        </p>
+                    </Message>
+                    :
+                    null
+                }
+            </div>
+        );
+    }
 };
 
 export default CreateCustomerRecordComponent;

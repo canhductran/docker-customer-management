@@ -6,70 +6,111 @@ import FormInput from './../form-input/FormInputComponent.jsx';
 
 import CustomButton from './../custom-button/CustomButtonComponent.jsx';
 
+import { Message } from 'semantic-ui-react'
+
 import SearchCustomerRecordsResultList from './../search-customer-records-results/SearchCustomerRecordsResultList.jsx';
 
 import './search-customer-records.scss';
 
 class SearchCustomerRecordsComponent extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        customerTelephoneNumber: '',
-        customerResults: []
+        this.state = {
+            phone: '',
+            customerResults: [],
+            errors: [],
+        }
     }
-  }
 
-  handleSubmit = event => {
-    event.preventDefault();
+    validate(phone) {
+        let errors = [];
 
-    const {customerTelephoneNumber} = this.state;
+        if (!phone || phone.toString().length > 11) {
+            errors.push('You can only search with less than 11 digits');
+        }
 
-    axios.request({
-      method: 'GET',
-      url: 'http://localhost:3001/api/customers',
-      params: {
-        customerTelephoneNumber: customerTelephoneNumber
-      },
+        return errors;
+    }
 
-    }).then((res)=>{
-      this.setState({
-        customerResults: res.data
-      });
-    }).catch((err)=>{
-      console.log("API call unsucessfull", err);
-    })
-  }
+    handleSubmit = event => {
+        event.preventDefault();
 
-  handleChange = event => {
-      const {value, name} = event.target;
+        const {phone} = this.state;
+        const validationErrors = this.validate(phone);
 
-      this.setState({
-          [name]: value
-      });
-  }
+        this.setState({
+            errors: validationErrors
+        });
 
-  render() {
-    const {customerTelephoneNumber} = this.state;
+        if (validationErrors.length) {
+            return;
+        }
 
-    return (
-      <div>
-        <form className='search-customer-records' onSubmit={this.handleSubmit}>
-            <FormInput
-                type='number'
-                name='customerTelephoneNumber'
-                value={customerTelephoneNumber}
-                label='Customer Telephone Number'
-                onChange={this.handleChange}
-                required></FormInput>
+        axios.request({
+            method: 'GET',
+            url: 'http://localhost:3001/api/customers',
+            params: {
+                phone: phone
+            }
+        }).then((res) => {
+            this.setState({
+                customerResults: res.data,
+                errors: []
+            });
+        }).catch((err) => {
+            this.setState({
+                customerResults: '',
+                errors: ['An unexpected error has happened. Please try again.']
+            })
+            console.log("API call unsucessfull", err);
+        });
+    }
 
-            <CustomButton type='submit'>Search</CustomButton>
-        </form>
+    handleChange = event => {
+        const {value, name} = event.target;
 
-        <SearchCustomerRecordsResultList customerResults={this.state.customerResults}></SearchCustomerRecordsResultList>
-      </div>
-    );
-  }
+        this.setState({
+            [name]: value
+        });
+    }
+
+    render() {
+        const {phone} = this.state;
+
+        return (
+            <div className='search-customer-records-container'>
+                <form className='search-customer-records' onSubmit={this.handleSubmit}>
+                    <FormInput
+                        type='number'
+                        name='phone'
+                        value={phone}
+                        label='Customer Telephone Number'
+                        onChange={this.handleChange}
+                        maxlength="11"
+                        minlength="1"
+                        required>
+                    </FormInput>
+
+                    <CustomButton type='submit'>Search</CustomButton>
+                </form>
+
+                {
+                    this.state.errors && this.state.errors.length ?
+                    <Message
+                        error
+                        header='Failure'
+                        list={this.state.errors}
+                        className='validation-errors'
+                    />
+                    :
+                    null
+                }
+
+                <SearchCustomerRecordsResultList customerResults={this.state.customerResults}></SearchCustomerRecordsResultList>
+            </div>
+        );
+    }
 };
 
 export default SearchCustomerRecordsComponent;

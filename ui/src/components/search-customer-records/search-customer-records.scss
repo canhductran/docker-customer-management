@@ -1,15 +1,26 @@
-.search-customer-records {
+.search-customer-records-container {
     width: 30vw;
     display: flex;
     flex-direction: column;
     margin: auto;
 
-    .title {
-        margin: 10px 0;
+    .search-customer-records {
+        width: 30vw;
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+
+        .title {
+            margin: 10px 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
-    .buttons {
-        display: flex;
-        justify-content: space-between;
+    .validation-errors {
+        margin-top: 70px;
     }
 }

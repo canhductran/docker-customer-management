@@ -1,16 +1,10 @@
-const envVars = {
-    SERVER_HOST: '0.0.0.0',
-    SERVER_PORT: 3001,
-    MONGO_HOST: '0.0.0.0',
-    MONGO_PORT: 27010
-}
-
+//Just hardcoding at the moment, should use Environment Variables
 const config = {
-    host: envVars.SERVER_HOST,
-    port: envVars.SERVER_PORT,
+    host: '0.0.0.0',
+    port: 3001,
     mongo: {
-        host: envVars.MONGO_HOST,
-        port: envVars.MONGO_PORT
+        host: '0.0.0.0',
+        port: 27027
     }
 };
 
