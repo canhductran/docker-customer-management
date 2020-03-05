@@ -1,10 +1,9 @@
-//Just hardcoding at the moment, should use Environment Variables
 const config = {
-    host: '0.0.0.0',
-    port: 3001,
+    host: process.env.SERVER_HOST,
+    port: process.env.SERVER_PORT,
     mongo: {
-        host: '0.0.0.0',
-        port: 27017
+        host: process.env.MONGO_HOST,
+        port: process.env.MONGO_PORT
     }
 };
 

@@ -7,6 +7,12 @@ const SearchCustomerRecordsResultList = ({customerResults}) => (
         {
             customerResults && customerResults.length ?
             <table className='search-customer-record-results'>
+                <thead>
+                    <tr className='search-customer-record-result'>
+                        <th className='customer-name'>Customer Name</th>
+                        <th className='customer-telephone'>Customer Phone</th>
+                    </tr>
+                </thead>
                 <tbody>
                 {
                     customerResults.map(customerResult => (

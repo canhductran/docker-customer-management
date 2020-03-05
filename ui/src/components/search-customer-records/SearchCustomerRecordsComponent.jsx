@@ -95,8 +95,8 @@ class SearchCustomerRecordsComponent extends React.Component {
                         value={phone}
                         label='Customer Telephone Number'
                         onChange={this.handleChange}
-                        maxlength="11"
-                        minlength="1"
+                        maxLength='11'
+                        minLength='1'
                         required>
                     </FormInput>
 

@@ -6,6 +6,9 @@
     margin: auto;
 
     .customer-name {
+      width: 20vw;
+      white-space: nowrap;
+      overflow: hidden;
       float: left;
     }
 
