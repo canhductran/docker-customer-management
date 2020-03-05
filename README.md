@@ -5,9 +5,11 @@ cd my-app
 docker-compose up
 ```
 
-Server port: 3001
-Client port: 3000
-Database port: 27017
+* Server port: 3001
+
+* Client port: 3000
+
+* Database port: 27017
 
 Please free up these ports before running the application.
 
