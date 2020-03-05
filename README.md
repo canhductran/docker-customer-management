@@ -6,7 +6,7 @@ To run the project, do this:
 cd docker-customer-management
 docker-compose up
 ```
-Please free up these ports before running the application.
+Ports running:
 
 * Server port: 3001
 
