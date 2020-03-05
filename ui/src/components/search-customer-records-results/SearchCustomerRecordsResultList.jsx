@@ -3,21 +3,25 @@ import React from 'react';
 import './search-customer-records-results.scss';
 
 const SearchCustomerRecordsResultList = ({customerResults}) => (
-    <table className='search-customer-record-results'>
-        <tbody>
+    <div>
         {
             customerResults && customerResults.length ?
-            customerResults.map(customerResult => (
-                <tr className='search-customer-record-result'>
-                    <td className='customer-name'>{customerResult.name}</td>
-                    <td className='customer-telephone'>{customerResult.phone}</td>
-                </tr>
-            ))
+            <table className='search-customer-record-results'>
+                <tbody>
+                {
+                    customerResults.map(customerResult => (
+                        <tr className='search-customer-record-result'>
+                            <td className='customer-name'>{customerResult.name}</td>
+                            <td className='customer-telephone'>{customerResult.phone}</td>
+                        </tr>
+                    ))
+                }
+                </tbody>
+            </table>
             :
             null
         }
-        </tbody>
-    </table>
+    </div>
 );
 
 export default SearchCustomerRecordsResultList;
