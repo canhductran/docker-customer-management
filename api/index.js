@@ -8,7 +8,7 @@ const customersRoute = require('./server/routes/customers.route');
 const router = express.Router();
 const cors = require('cors');
 
-require('./config/mongoose');
+require('./server/config/mongoose');
 
 router.use('/api/customers', customersRoute);
 
