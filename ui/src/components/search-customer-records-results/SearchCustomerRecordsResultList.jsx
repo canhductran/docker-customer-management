@@ -7,7 +7,7 @@ const SearchCustomerRecordsResultList = ({customerResults}) => (
         {
             customerResults && customerResults.length ?
             <table className='search-customer-record-results'>
-                <thead>
+                <thead align='left'>
                     <tr className='search-customer-record-result'>
                         <th className='customer-name'>Customer Name</th>
                         <th className='customer-telephone'>Customer Phone</th>
@@ -17,7 +17,7 @@ const SearchCustomerRecordsResultList = ({customerResults}) => (
                 {
                     customerResults.map(customerResult => (
                         <tr className='search-customer-record-result'>
-                            <td className='customer-name'>{customerResult.name}</td>
+                            <td className='customer-name' title={customerResult.name}>{customerResult.name}</td>
                             <td className='customer-telephone'>{customerResult.phone}</td>
                         </tr>
                     ))
