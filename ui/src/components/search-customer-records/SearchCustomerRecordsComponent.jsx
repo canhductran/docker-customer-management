@@ -27,7 +27,7 @@ class SearchCustomerRecordsComponent extends React.Component {
         let errors = [];
 
         if (!phone || phone.toString().length > 11) {
-            errors.push('You can only search with less than 11 digits');
+            errors.push('You can only search with 11 digits or less');
         }
 
         return errors;
