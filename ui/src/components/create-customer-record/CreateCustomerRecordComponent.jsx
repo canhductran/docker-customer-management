@@ -43,7 +43,8 @@ class CreateCustomerRecordComponent extends React.Component {
         const validationErrors = this.validate(name, phone);
 
         this.setState({
-            errors: validationErrors
+            errors: validationErrors,
+            successMessage: ''
         });
 
         if (validationErrors.length) {
@@ -100,6 +101,8 @@ class CreateCustomerRecordComponent extends React.Component {
                         value={name}
                         label='Customer Name'
                         onChange={this.handleChange}
+                        maxLength='50'
+                        minLength='5'
                         required>
                     </FormInput>
 

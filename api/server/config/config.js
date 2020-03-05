@@ -4,7 +4,7 @@ const config = {
     port: 3001,
     mongo: {
         host: '0.0.0.0',
-        port: 27027
+        port: 27017
     }
 };
 

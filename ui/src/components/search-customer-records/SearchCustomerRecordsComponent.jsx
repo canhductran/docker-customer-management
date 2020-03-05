@@ -40,7 +40,8 @@ class SearchCustomerRecordsComponent extends React.Component {
         const validationErrors = this.validate(phone);
 
         this.setState({
-            errors: validationErrors
+            errors: validationErrors,
+            customerResults: []
         });
 
         if (validationErrors.length) {
@@ -60,7 +61,7 @@ class SearchCustomerRecordsComponent extends React.Component {
             });
         }).catch((err) => {
             this.setState({
-                customerResults: '',
+                customerResults: [],
                 errors: ['An unexpected error has happened. Please try again.']
             })
             console.log("API call unsucessfull", err);

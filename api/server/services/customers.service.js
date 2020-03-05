@@ -17,9 +17,6 @@ const getCustomers = async (phone) => {
  * @param {*} phone Phone number of the customer
  */
 const postCustomer = async (name, phone) => {
-    console.log(name);
-    console.log(phone);
-
     let customer = new Customer({ 
         name: name,
         phone: phone
