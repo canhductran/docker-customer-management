@@ -22,12 +22,7 @@ const postCustomer = async (name, phone) => {
         phone: phone
     });
     
-    try {
-        customer = await customer.save();
-    } catch (exception) {
-        console.error(exception);
-        customer = null;
-    }
+    customer = await customer.save();
 
     return customer;
 };

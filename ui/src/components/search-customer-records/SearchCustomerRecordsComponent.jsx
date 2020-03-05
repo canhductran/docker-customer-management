@@ -60,10 +60,17 @@ class SearchCustomerRecordsComponent extends React.Component {
                 errors: []
             });
         }).catch((err) => {
+            let errorMessage = err.response.data.error;
+
+            if (!errorMessage) {
+                errorMessage = 'An unexpected error happened. Please try again.';
+            }
+
             this.setState({
                 customerResults: [],
-                errors: ['An unexpected error has happened. Please try again.']
-            })
+                errors: [errorMessage]
+            });
+            
             console.log("API call unsucessfull", err);
         });
     }

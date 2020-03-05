@@ -11,7 +11,14 @@ const customersService = require('../services/customers.service');
 const getCustomers = async function(req, res) {
     const phone = req.query.phone;
 
-    const customers = await customersService.getCustomers(phone);
+    let customers;
+
+    try {
+        customers = await customersService.getCustomers(phone);
+    } catch (error) {
+        console.error(error);
+        return res.status(422).send({error: 'An unexpected error happened. Please try again'});        
+    }
     
     res.send(customers);
 };
@@ -31,8 +38,21 @@ const postCustomer = async function(req, res) {
     const name = req.body.name;
     const phone = req.body.phone;
 
-    const customer = await customersService.postCustomer(name, phone);
-    
+    let customer;
+
+    try {
+        customer = await customersService.postCustomer(name, phone);
+    } catch (error) {
+        console.error(error);
+
+        //If the error is duplicated key, it means that this phone number already exists. Return a different message
+        if (error.name === 'MongoError' && error.code === 11000) {
+            return res.status(422).send({error: 'A customer with the same phone number already exists!'});
+        }
+
+        return res.status(422).send({error: 'An unexpected error happened. Please try again'});        
+    }
+
     res.send(customer);
 };
 

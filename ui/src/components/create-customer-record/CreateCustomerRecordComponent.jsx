@@ -61,23 +61,25 @@ class CreateCustomerRecordComponent extends React.Component {
         }).then((res) => {
             let result = res.data;
 
-            if (!result) {
-                this.setState({
-                    errors: ['A customer with the same telephone number already exists'],
-                    successMessage: ''
-                });
-            } else {
+            if (result) {
                 this.setState({
                     successMessage: `Customer ${name} has been created`,
                     errors: []
                 })
             }
         }).catch((err) => {
+            let errorMessage = err.response.data.error;
+
+            if (!errorMessage) {
+                errorMessage = 'An unexpected error happened. Please try again.';
+            }
+
             this.setState({
                 successMessage: '',
-                errors: ['An unexpected error has happened. Please try again.']
-            })
-            console.log("api call unsucessfull", err);
+                errors: [errorMessage]
+            });
+
+            console.error("API call unsucessfull", err);
         });
     }
 
