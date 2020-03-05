@@ -11,6 +11,10 @@ const customersService = require('../services/customers.service');
 const getCustomers = async function(req, res) {
     const phone = req.query.phone;
 
+    if (!phone || phone.length > 11) {
+        return res.status(400).send({error: 'Cannot search customers with more than 11 digits'});
+    }
+
     let customers;
 
     try {
