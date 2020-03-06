@@ -11,9 +11,14 @@ const customersService = require('../services/customers.service');
 const getCustomers = async function(req, res) {
     const phone = req.query.phone;
 
-    //Validate phone query parameter
+    //Validate phone query parameter has the valid length
     if (!phone || phone.length > 11) {
         return res.status(400).send({error: 'Cannot search customers with more than 11 digits'});
+    }
+
+    //Validate if phone query parameter is a number
+    if (!/^\d+$/.test(phone)) {
+        return res.status(400).send({error: 'Cannot search customers with non numeric value'});
     }
 
     let customers;

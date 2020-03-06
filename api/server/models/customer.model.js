@@ -26,7 +26,7 @@ const CustomerSchema = new Schema({
 const validateCustomer = (customer) => {
 	const schema = {
 		name: Joi.string().min(5).max(50).required(),
-		phone: Joi.string().min(11).max(11).required()
+		phone: Joi.string().regex(/^\d+$/).min(11).max(11).required() //check if the string only contains digit
 	}
 
 	return Joi.validate(customer, schema);
