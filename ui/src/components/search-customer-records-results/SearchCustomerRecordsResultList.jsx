@@ -3,7 +3,7 @@ import React from 'react';
 import './search-customer-records-results.scss';
 
 const SearchCustomerRecordsResultList = ({customerResults}) => (
-    <div>
+    <div className='search-customer-record-results-container'>
         {
             customerResults && customerResults.length ?
             <table className='search-customer-record-results'>
@@ -25,7 +25,7 @@ const SearchCustomerRecordsResultList = ({customerResults}) => (
                 </tbody>
             </table>
             :
-            null
+            <h3 align="center" className='no-result-match-title'>No results match your search</h3>
         }
     </div>
 );

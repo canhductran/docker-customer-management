@@ -20,6 +20,7 @@ class SearchCustomerRecordsComponent extends React.Component {
             phone: '',
             customerResults: [],
             errors: [],
+            showResult: false
         }
     }
 
@@ -41,7 +42,8 @@ class SearchCustomerRecordsComponent extends React.Component {
 
         this.setState({
             errors: validationErrors,
-            customerResults: []
+            customerResults: [],
+            showResult: false
         });
 
         if (validationErrors.length) {
@@ -55,9 +57,16 @@ class SearchCustomerRecordsComponent extends React.Component {
                 phone: phone
             }
         }).then((res) => {
+            let customerResults = [];
+            
+            if (res.data) {
+                customerResults = res.data
+            }
+
             this.setState({
-                customerResults: res.data,
-                errors: []
+                customerResults: customerResults,
+                errors: [],
+                showResult: true
             });
         }).catch((err) => {
             let errorMessage = err.response.data.error;
@@ -68,10 +77,11 @@ class SearchCustomerRecordsComponent extends React.Component {
 
             this.setState({
                 customerResults: [],
-                errors: [errorMessage]
+                errors: [errorMessage],
+                showResult: false
             });
             
-            console.log("API call unsucessfull", err);
+            console.log("API call unsucessfull");
         });
     }
 
@@ -115,7 +125,12 @@ class SearchCustomerRecordsComponent extends React.Component {
                     null
                 }
 
-                <SearchCustomerRecordsResultList customerResults={this.state.customerResults}></SearchCustomerRecordsResultList>
+                {
+                    this.state.showResult ?
+                    <SearchCustomerRecordsResultList customerResults={this.state.customerResults}></SearchCustomerRecordsResultList>
+                    :
+                    null
+                }
             </div>
         );
     }

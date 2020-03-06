@@ -26,11 +26,15 @@ class CreateCustomerRecordComponent extends React.Component {
         let errors = [];
 
         if (!phone || phone.toString().length !== 11) {
-            errors.push('Telephone number has to have 11 digits')
+            errors.push('Phone number has to have 11 digits')
         }
 
         if (!name || !name.length) {
             errors.push('Customer Name cannot be empty');
+        }
+
+        if (name && !name.match(/^[a-zA-Z ]+$/)) {
+            errors.push('Customer Name can only contains alphabets');
         }
 
         return errors;
@@ -39,9 +43,13 @@ class CreateCustomerRecordComponent extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        const {name, phone} = this.state;
+        let {name, phone} = this.state;
+        
+        name = name.trim();
+
         const validationErrors = this.validate(name, phone);
 
+        
         this.setState({
             errors: validationErrors,
             successMessage: ''
@@ -63,7 +71,7 @@ class CreateCustomerRecordComponent extends React.Component {
 
             if (result) {
                 this.setState({
-                    successMessage: `Customer ${name} has been created`,
+                    successMessage: `Customer '${name}' has been created`,
                     errors: []
                 })
             }
@@ -79,7 +87,7 @@ class CreateCustomerRecordComponent extends React.Component {
                 errors: [errorMessage]
             });
 
-            console.error("API call unsucessfull", err);
+            console.log("API call unsucessfull");
         });
     }
 

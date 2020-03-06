@@ -1,19 +1,27 @@
-.search-customer-record-results {
+.search-customer-record-results-container {
   width: 30vw;
-  margin: 30px auto;
 
-  .search-customer-record-result {
-    margin: auto;
-
-    .customer-name {
-      width: 20vw;
-      white-space: nowrap;
-      overflow: hidden;
-      float: left;
+  .search-customer-record-results {
+    width: 30vw;
+    margin: 30px auto;
+  
+    .search-customer-record-result {
+      margin: auto;
+  
+      .customer-name {
+        width: 20vw;
+        white-space: nowrap;
+        overflow: hidden;
+        float: left;
+      }
+  
+      .customer-telephone {
+        float: right;
+      }
     }
+  }
 
-    .customer-telephone {
-      float: right;
-    }
+  .no-result-match-title {
+    margin: 30px auto;
   }
 }
