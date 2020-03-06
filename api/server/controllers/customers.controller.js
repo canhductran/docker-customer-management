@@ -13,7 +13,7 @@ const getCustomers = async function(req, res) {
 
     //Validate phone query parameter has the valid length
     if (!phone || phone.length > 11) {
-        return res.status(400).send({error: 'Cannot search customers with more than 11 digits'});
+        return res.status(400).send({error: 'Cannot search customers with less than 1 or more than 11 digits'});
     }
 
     //Validate if phone query parameter is a number
