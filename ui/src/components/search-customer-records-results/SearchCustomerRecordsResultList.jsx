@@ -16,7 +16,7 @@ const SearchCustomerRecordsResultList = ({customerResults}) => (
                 <tbody>
                 {
                     customerResults.map(customerResult => (
-                        <tr className='search-customer-record-result'>
+                        <tr key={customerResult._id} className='search-customer-record-result'>
                             <td className='customer-name' title={customerResult.name}>{customerResult.name}</td>
                             <td className='customer-telephone'>{customerResult.phone}</td>
                         </tr>
